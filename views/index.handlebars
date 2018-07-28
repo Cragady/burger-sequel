@@ -1,0 +1,48 @@
+<div id="overlay">
+
+    <h1 class="jumbotron text-center">Steak Out, Berg In!</h1>
+
+    <section class="container">
+        <div class="row">
+            <div class="row col mx-auto">
+                <section class="card mx-auto">
+                    <h4 class="card-header text-center">Burgers not eaten:</h4>
+
+                    <ul class="mx-auto px-0">
+                        {{#each burgers}}
+                            {{#unless devoured}}
+                                <div class="rounded hover-craft px-1">
+                                    {{burger_name}}
+                                    <button class="eat-change btn btn-custo-musto" data-id="{{id}}" data-eaten="1">Eat Me!</button>
+                                    </div>
+                            {{/unless}}
+                        {{/each}}
+                    </ul>
+
+                </section>
+            </div>
+
+            <div class="row col mx-auto">
+                <section class="card mx-auto">
+                    <h4 class="card-header text-center">Burgers eaten:</h4>
+
+                    <ul class="mx-auto px-0">
+                        {{#each burgers}}
+                            {{#if devoured}}
+                                <div class="rounded hover-craft px-1">
+                                    {{burger_name}}
+                                    <button class="eat-change ewww btn btn-custo-musto" data-id="{{id}}" data-eaten="0">Give Back</button>
+                                    </div>
+                            {{/if}}
+                        {{/each}}
+                    </ul>
+
+                </section>
+            </div>
+
+            <div class="col-12 mx-auto mt-5 text-center"><input id="new-berg" placeholder="New burger name!"></input></div>
+            <div class="col-12 mt-1 text-center"><button id="add-berg" class="btn">Add a Burger!</button></div>
+        </div>
+    </section>
+
+</div>

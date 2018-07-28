@@ -1,0 +1,44 @@
+body{
+    background: url("../img/ffburgerfrybackrep.jpg");
+    background-size: 250px;
+    opacity: 0.95;
+}
+
+#overlay{
+    background: rgba(255, 255, 255, 0.808);
+}
+
+#new-berg{
+    min-width: 250px;
+}
+
+#add-berg{
+    margin-bottom: 50px;
+}
+
+.hover-craft{
+    background: rgb(236, 220, 230);
+    margin: 3px;
+}
+
+.btn-custo-musto{
+    margin: 7px;
+}
+
+button{
+    min-width: 93px;
+    max-width: 93px;
+}
+
+#add-berg{
+    min-width: 124px;
+    background: rgb(23, 194, 74);
+}
+
+button{
+    background: #c1e4e3;
+}
+
+section.card{
+    background: #736e6e;
+}
