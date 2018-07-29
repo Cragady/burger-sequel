@@ -3,6 +3,7 @@ var express = require('express'),
     app = express(),
     exphbs = require("express-handlebars"),
     routes = require("./controllers/burger_controller.js"),
+    db = require("./models/index.js"),
     PORT = process.env.PORT || 3000;
 
 app.use(express.static("public"));
@@ -11,6 +12,8 @@ app.use(bodyParser.json());
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 app.use(routes);
-app.listen(PORT, function(){
-    console.log("Server is listening to you . . . ON PORT: " + PORT);
+db.sequelize.sync().then(function(){
+    app.listen(PORT, function(){
+        console.log("Server is listening to you . . . ON PORT: " + PORT);
+    });
 });

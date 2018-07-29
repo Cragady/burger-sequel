@@ -2,10 +2,15 @@
   "development": {
     "username": "root",
     "password": "root",
-    "database": "burgers_db",
-    "host": "localhost",
+    "database": "burgers2",
+    "host": "127.0.0.1",
     "dialect": "mysql",
-    "port": "3307"
+    "port": 3307,
+    "pool": {
+      "max": 5,
+      "min": 0,
+      "idle": 10000
+    }
   },
   "test": {
     "username": "root",
