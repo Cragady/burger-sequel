@@ -7,7 +7,8 @@ from the ajax calls to execute the functions
 tied to the ajax calls, using burger.js in models/ for 
 it's methods */
 router.get("/", function(req, res){
-    mdb.Burgers.findAll({include: mdb.Eaters}).then(function(results){
+    mdb.Burgers.findAll({include: mdb.Eaters, order: [["burger_name", "ASC"]]})
+    .then(function(results){
         var handObj = {
             burgers: results
         };
@@ -28,7 +29,6 @@ router.put("/api/burgers/:id", function(req, res){
 });
 
 router.delete("/api/eaters/:id", function(req, res){
-    console.log("hit");
     mdb.Eaters.destroy({
         where: {burgerId: req.params.id}
     }).then((results) => {
