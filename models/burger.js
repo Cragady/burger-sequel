@@ -1,16 +1,5 @@
-// var db = require(__dirname + "/index.js");
-
-// var Allbergs = db.sequelize.define("burgers", {
-//     burger_name: db.Sequelize.STRING,
-//     devoured: db.Sequelize.BOOLEAN
-// });
-
-// Allbergs.sync();
-
-// module.exports = Allbergs;
-
 module.exports = function(sequelize, DataTypes){
-    var burgers = sequelize.define("burgers", {
+    var Burgers = sequelize.define("Burgers", {
         burger_name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -23,7 +12,8 @@ module.exports = function(sequelize, DataTypes){
             defaultValue: false
         },
     });
-    return burgers;
+    Burgers.associate = function(models){
+        Burgers.hasMany(models.Eaters, {foreignKey: 'burgerId'});
+    };
+    return Burgers;
 }
-
-//something abour freezetablename :true

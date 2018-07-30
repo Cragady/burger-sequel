@@ -1,3 +1,9 @@
+html, body, #overlay {
+    margin: 0;
+    min-height: 100%;
+    min-width: 100%;
+}
+
 body{
     background: url("../img/ffburgerfrybackrep.jpg");
     background-size: 250px;

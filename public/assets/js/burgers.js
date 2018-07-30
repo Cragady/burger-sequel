@@ -13,12 +13,30 @@ $(".eat-change").click(function(){
     var devourChanging = {
         devoured: devourChanger
     };
-    $.ajax("/api/burgers/" + id, {
-        type: "PUT",
-        data: devourChanging
-    }).then(function(){
-        location.reload();
-    })
+    var nameOfEater = $(".eater-name").val().trim();
+    var nameSetter = {
+        eater_name: nameOfEater
+    }
+    if(((devourChanger === 1) && (nameOfEater !== "")) || (devourChanger === 0)){
+        $.ajax("/api/burgers/" + id, {
+            type: "PUT",
+            data: devourChanging
+        }).then(function(){
+            if(devourChanger === 0){
+                $.ajax("/api/eaters/" + id, {
+                    type: "DELETE"
+                });
+            } else {
+                $.ajax("/api/eaters/" + id, {
+                    type: "POST",
+                    data: nameSetter
+                });
+            };
+            location.reload();
+        });
+    } else {
+        $("#reqName").modal("toggle");
+    };
 });
 
 $("#add-berg").click(function(){
