@@ -1,39 +1,40 @@
 # **Purpose**
 
-The purpose of this activity is to interact with a sql database utilizing handlebars and ORM structuring. The main functionality with the communication with the database is `POST` and `PUT`. 
+The purpose of this project is to replace ORM with Sequelize.  
 
 The user selects which burger they want to eat, or give back, and it will update the database accordingly and refresh the page with the burgers in the corresponding spots under "Burgers Eaten" and "Burgers not Eaten".
 
 # **Brief Explanations**
 
-### **orm.js**
+### **Sequelize**
 
-* `sqlEyesObj()` Takes the object given to it through an ajax call, and puts the values of each key in the object in a string, and then pushes it to an array with the value's key so that it is structured like this: `'key = value'`. This makes it readable for SQL for proper communication to the database and functionality.
+Sequelize eliminates the need for orm.js. In order fo sequelize to work, the npm mysql2 is required.
 
-* `orm{}` is an object of methods that is exported for use in `/models/burger.js`.
-  * `selectAll()` selects all from `burgers_db.burgers` for initializing the page. This method is used on the page load, as dictated by `burger_controller.js` and gives the information for all the burgers stored in `burgers_db`.
-  * `insertOne()` creates a new entry for the `burgers` table. It takes in the table, column, value, and a call back function. The query string is set using table, cols, vals, `toString()` and logical operators to pass as an argument for the `connection.query()` function. The call back function is used for the response, and is inherited from what is specified in `burger_controller.js`.
-  * `updateOne()` works in a very similar way to `insertOne()` for setting the query string. Here, an object is used, and `sqlEyesObj()` is called to make it readable for the database. This method updates the devoured status of the burger.
+### **index.js**
 
-* `orm{}` is exported at the end of this file to be imported for use in `/models/burger.js`.
+Sets the connection to the database, and parses the models to a readable format for `sequelize`.
 
-### **models/burger.js**
+### **/models**
 
-`orm.js` is required in this file. All of the methods set in `orm{}` are set here, and the required arguments used in the `burger{}` methods since one of the arguments is set when `orm{}`'s methods are called in `burger{}`'s methods. This makes it easier for the front end and back end to communicate since the front end doesn't have to put in as many arguments to send to the back end for database communication. The methods are renamed in `burger{}`, for easier use.
+**burger.js & eater.js**
+
+The models `burger.js` and `eater.js` reference each other with `.belongsTo()` and `.hasMany()`. This joins the tables together, so that when the `.get()` method is used, extra syntax can be used to properly associate the tables together.
 
 ### **burger_controller.js**
 
-Works as a router for the server. It takes the url parameters specified by the initial page load, or the url parameters specified by the ajax calls. `burger_controller.js` requires `/models/burger.js`, and uses the methods as specified by `/models/burger.js` that are also imported from `orm.js` to `/models/burger.js`.
+Works as a router for the server. It takes the url parameters specified by the initial page load, or the url parameters specified by the ajax calls. `burger_controller.js` requires `/models`, and uses syntax for `sequelize` to show all of the data.
 
-* `router.get()` fires off on the page load with the base url. It executes `burger.all()` and gives the data on all of the burgers stored in `burgers_db.burgers` to the handlebars files. 
+* `router.get()` fires off on the page load with the base url. It executes `burger.all()` and gives the data on all of the burgers stored in `burger2.burgers`, and the associated `burgers2.eaters`, to the handlebars files. `{include: mdb.Eaters, order: [["burger_name", "ASC"]]}` are used as arguments for the `.findAll()` function to pull the data associated with `burgers2.burgers`.
 
-* `router.post()` takes the object data from the ajax call in `js/burgers.js` and creates a new burger with it's specifications.
+* `router.post()` takes the object data from the ajax call in `js/burgers.js` and creates a new burger with it's specifications. There is also a `router.post()` tied to `eater.js` that updates the database with the eater's name, and the burger id from `burger`.
 
 *  `router.put()` updates the selected burger's devoured status. The data for the burger to be updated, and what to update it to, is given by the ajax call that is pulled from the `data-` attributes set by handlebars.
 
+* `router.delete()` deletes the eater from `burgers2.eaters` when a burger is updated from devoured to not devoured.
+
 ### **public/assets/js/burgers.js**
 
-Holds the ajax calls for updating and creating burgers. The data is set on the button click and is passed as an object to be readable with `orm.js`'s communication with sql through it's methods.
+Holds the ajax calls for updating and creating burgers. The data is set on the button click and is passed as an object to be readable with `sequelize`'s communication with sql through it's methods.
 
 This also sets all of the data for the burgers that are stored in the `data-` attributes in the html.
 
@@ -41,7 +42,7 @@ This also sets all of the data for the burgers that are stored in the `data-` at
 
 Receives all of the information about the burgers on the page load due to `router.get()` in `burger_controller.js`. `{{#each}}` is used to list all of the burgers; `{{#unless}}` and `{{#if}}` is used to filter the burgers according to their devoured status. Two cards are used to display the burgers eaten, and the burger not eaten. 
 
-If the burgers aren't devoured, then a button is placed next to the `{{burger_name}}` prompting the user to eat the burger, the button holds the burger's id and the opposite value of it's devoured status for update. If the burger is eaten, the user is prompted to give the burger back.
+If the burgers aren't devoured, then a button is placed next to the `{{burger_name}}` prompting the user to eat the burger, the button holds the burger's id and the opposite value of it's devoured status for update. If the burger is eaten, the user is prompted to give the burger back. With the `.findAll()` function, `Eaters` is put into an object and associated with `Burgers`. To list the person who ate the burgers, it was referenced in this manner: `{{Eaters/0/eater_name}}` in the devoured true section next to `{{burger_name}}`.
 
 # **Demo**
 

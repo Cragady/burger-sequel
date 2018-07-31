@@ -1,20 +1,25 @@
 USE burgers2;
 
 INSERT INTO burgers(burger_name, devoured)
-	values("Other Burger", false),
+	VALUES("Other Burger", false),
         ("The Reubenator", false),
-        ("The Dripper", false),
-        ("Cheez Berg", false),
-        ("Spicy Angus", false),
+        ("The Dripper", true),
+        ("Cheez Berg", true),
+        ("Spicy Angus", true),
         ("Patty Melt", false),
         ("Cheesy Mistake", false),
-        ("Gut Wrencher", false),
+        ("Gut Wrencher", true),
         ("Bum Bender", false),
         ("Greasenator", true)
 ;
 
 INSERT INTO eaters(eater_name, burgerId)
-        VALUES("Joe", 10);
+        VALUES("Doofenshmirtz", 3),
+        ("Star", 4),
+        ("Solaire", 5),
+        ("DDD", 8),
+        ("Wario", 10)
+;
 
 SELECT * FROM burgers;
 SELECT * FROM eaters;
