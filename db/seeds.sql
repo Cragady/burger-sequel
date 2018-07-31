@@ -1,6 +1,6 @@
 USE burgers2;
 
-INSERT INTO burgers(burger_name, devoured)
+INSERT INTO Burgers(burger_name, devoured)
 	VALUES("Other Burger", false),
         ("The Reubenator", false),
         ("The Dripper", true),
@@ -13,7 +13,7 @@ INSERT INTO burgers(burger_name, devoured)
         ("Greasenator", true)
 ;
 
-INSERT INTO eaters(eater_name, burgerId)
+INSERT INTO Baters(eater_name, burgerId)
         VALUES("Doofenshmirtz", 3),
         ("Star", 4),
         ("Solaire", 5),
