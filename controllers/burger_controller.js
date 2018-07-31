@@ -2,10 +2,6 @@ var express = require('express'),
     mdb = require('../models'),
     router = express.Router();
 
-/*This takes the url paramaters from the user input or
-from the ajax calls to execute the functions 
-tied to the ajax calls, using burger.js in models/ for 
-it's methods */
 router.get("/", function(req, res){
     mdb.Burgers.findAll({include: mdb.Eaters, order: [["burger_name", "ASC"]]})
     .then(function(results){
