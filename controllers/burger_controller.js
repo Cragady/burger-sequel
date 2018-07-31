@@ -50,10 +50,8 @@ router.post("/api/eaters/:id", function(req, res){
         eater_name: req.body.eater_name
     }).then((results) => {
         if(results.changedRows === 0) {
-            console.log("oops");
             return res.status(404).end();
         } else {
-            console.log("yes");
             res.status(200).end();
         };
     });
