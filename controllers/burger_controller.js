@@ -3,7 +3,9 @@ var express = require('express'),
     router = express.Router();
 
 router.get("/", function(req, res){
-    mdb.Burgers.findAll({include: mdb.Eaters, order: [["burger_name", "ASC"]]})
+    mdb.Burgers.findAll({
+        include: mdb.Eaters, 
+        order: [["burger_name", "ASC"]]})
     .then(function(results){
         var handObj = {
             burgers: results
@@ -15,7 +17,9 @@ router.get("/", function(req, res){
 router.put("/api/burgers/:id", function(req, res){
     mdb.Burgers.update({
         devoured: req.body.devoured
-    }, {where: {id: req.params.id}}).then((results) => {
+    }, {
+        where: {id: req.params.id
+        }}).then((results) => {
         if(results.changedRows === 0){
             return res.status(404).end();
         } else {
